@@ -1,0 +1,137 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>br.com.oktolab</groupId>
+	<artifactId>jetty-jersey-server</artifactId>
+	<version>1.0.0</version>
+
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
+		<jdk.version>1.8</jdk.version>
+		<jetty.version>9.4.2.v20170220</jetty.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>maven-s3-okto-release</id>
+			<url>s3://m2-repository-okto/releases</url>
+		</repository>
+		<repository>
+			<id>maven-s3-okto-snapshot</id>
+			<url>s3://m2-repository-okto/snapshots</url>
+		</repository>
+	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>maven-s3-okto-release</id>
+			<name>AWS Release Repository</name>
+			<url>s3://m2-repository-okto/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>maven-s3-okto-snapshot</id>
+			<name>AWS Snapshot Repository</name>
+			<url>s3://m2-repository-okto/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>2.3.2</version>
+			<configuration>
+				<source>${jdk.version}</source>
+				<target>${jdk.version}</target>
+			</configuration>
+		</plugin>
+	</plugins>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlet</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+
+		<!-- <dependency> -->
+		<!-- <groupId>org.glassfish.jersey.media</groupId> -->
+		<!-- <artifactId>jersey-media-json-jackson</artifactId> -->
+		<!-- <version>2.17</version> -->
+		<!-- </dependency> -->
+		<dependency>
+			<groupId>br.com.oktolab.gson</groupId>
+			<artifactId>gson-utils</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.netflix.hystrix</groupId>
+			<artifactId>hystrix-core</artifactId>
+			<version>1.5.10</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.hk2</groupId>
+			<artifactId>hk2-locator</artifactId>
+			<version>2.5.0-b30</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.hk2</groupId>
+			<artifactId>guice-bridge</artifactId>
+			<version>2.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.hk2</groupId>
+			<artifactId>hk2-utils</artifactId>
+			<version>2.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.hk2</groupId>
+			<artifactId>hk2-locator</artifactId>
+			<version>2.5.0-b30</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>2.25</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>2.25</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId><!-- TODO versão 3 -->
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-configuration</groupId>
+			<artifactId>commons-configuration</artifactId>
+			<version>1.10</version>
+		</dependency>
+
+	</dependencies>
+</project>
