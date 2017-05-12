@@ -3,17 +3,22 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.oktolab</groupId>
 	<artifactId>jetty-jersey-server</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
 		<jdk.version>1.8</jdk.version>
-		<jetty.version>9.4.2.v20170220</jetty.version>
+		<glassfish.hk2.version>2.5.0-b36</glassfish.hk2.version><!-- 2.4.0 b36 -->
+		<jetty.version>9.4.3.v20170317</jetty.version><!-- 9.4.3.v20170317 9.4.2.v20170220 -->
 	</properties>
 
 	<repositories>
+		<repository>
+			<id>central</id>
+			<url>http://repo1.maven.org/maven2/</url>
+		</repository>
 		<repository>
 			<id>maven-s3-okto-release</id>
 			<url>s3://m2-repository-okto/releases</url>
@@ -37,17 +42,26 @@
 		</snapshotRepository>
 	</distributionManagement>
 
-	<plugins>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<version>2.3.2</version>
-			<configuration>
-				<source>${jdk.version}</source>
-				<target>${jdk.version}</target>
-			</configuration>
-		</plugin>
-	</plugins>
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.springframework.build</groupId>
+				<artifactId>aws-maven</artifactId>
+				<version>5.0.0.RELEASE</version>
+			</extension>
+		</extensions>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 	<dependencies>
 		<dependency>
@@ -58,6 +72,11 @@
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-servlet</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-http</artifactId>
 			<version>${jetty.version}</version>
 		</dependency>
 
@@ -72,43 +91,41 @@
 			<version>1.1.0</version>
 		</dependency>
 
+		<!-- <dependency> -->
+		<!-- <groupId>com.netflix.hystrix</groupId> -->
+		<!-- <artifactId>hystrix-core</artifactId> -->
+		<!-- <version>1.5.10</version> -->
+		<!-- </dependency> -->
 		<dependency>
-			<groupId>com.netflix.hystrix</groupId>
-			<artifactId>hystrix-core</artifactId>
-			<version>1.5.10</version>
+			<groupId>org.glassfish.hk2</groupId>
+			<artifactId>hk2-api</artifactId>
+			<version>${glassfish.hk2.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.glassfish.hk2</groupId>
 			<artifactId>hk2-locator</artifactId>
-			<version>2.5.0-b30</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.hk2</groupId>
-			<artifactId>guice-bridge</artifactId>
-			<version>2.4.0</version>
+			<version>${glassfish.hk2.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.hk2</groupId>
 			<artifactId>hk2-utils</artifactId>
-			<version>2.4.0</version>
+			<version>${glassfish.hk2.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.hk2</groupId>
-			<artifactId>hk2-locator</artifactId>
-			<version>2.5.0-b30</version>
+			<artifactId>guice-bridge</artifactId>
+			<version>${glassfish.hk2.version}</version>
 		</dependency>
-
 
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-servlet</artifactId>
-			<version>2.25</version>
+			<version>2.25.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-server</artifactId>
-			<version>2.25</version>
+			<version>2.25.1</version>
 		</dependency>
 
 		<dependency>
@@ -117,15 +134,36 @@
 			<version>1.7.7</version>
 		</dependency>
 
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.5</version>
+		</dependency>
+
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
+			<version>2.5</version>
 		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>commons-lang</groupId>TODO versão 3 -->
+		<!-- <artifactId>commons-lang</artifactId> -->
+		<!-- <version>2.6</version> -->
+		<!-- </dependency> -->
+
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-configuration2 -->
 		<dependency>
-			<groupId>commons-lang</groupId><!-- TODO versão 3 -->
-			<artifactId>commons-lang</artifactId>
-			<version>2.6</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-configuration2</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.netflix.archaius/archaius-core -->
+		<dependency>
+			<groupId>com.netflix.archaius</groupId>
+			<artifactId>archaius-core</artifactId>
+			<version>0.7.5</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-configuration</groupId>

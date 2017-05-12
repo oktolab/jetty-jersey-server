@@ -9,7 +9,6 @@ import java.nio.charset.Charset;
 
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyReader;
@@ -17,7 +16,7 @@ import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import br.com.oktolab.gson.GSON;
 
@@ -40,7 +39,7 @@ public class MessageReaderWriterJsonProvider implements MessageBodyWriter<Object
     public void writeTo(Object t, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType,
             MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream) throws IOException, WebApplicationException {
         String json = GSON.getGson().toJson(t);
-        httpHeaders.add(HttpHeaders.CONTENT_LENGTH, json.getBytes().length);
+//        httpHeaders.add(HttpHeaders.CONTENT_LENGTH, json.getBytes().length);
         entityStream.write(json.getBytes());
     }
 
