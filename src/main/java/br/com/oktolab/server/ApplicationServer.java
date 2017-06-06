@@ -2,6 +2,7 @@ package br.com.oktolab.server;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -14,6 +15,8 @@ import com.netflix.config.ConfigurationManager;
 
 public class ApplicationServer {
 	
+	private static Function<Void, Boolean> healthCheckFunction;
+	
 	private Server server;
 	private ServletContextHandler context;
 	
@@ -24,7 +27,7 @@ public class ApplicationServer {
 		java.security.Security.setProperty("networkaddress.cache.negative.ttl" , "10");
 	}
 
-	public void registerResourceConfigFeatures(Class<?> clazz) {
+	public void registerResourceConfigFeature(Class<?> clazz) {
 		features.add(clazz);
 	}
 	
@@ -40,6 +43,17 @@ public class ApplicationServer {
         ServletHolder jerseyServlet = buildServletHolder(config);
         context = buildServletContext(server, jerseyServlet);
         server.setHandler(context);
+	}
+	
+	/**
+	 * Adiciona uma function a função de healthCheck da aplicação.
+	 * A função 'healthCheckFunction' deve retornar 'true' caso o teste de saúde seja satisfeito.
+	 * 
+	 * @param function
+	 */
+	public ApplicationServer withAppHealthCheckFunction(Function<Void, Boolean> healthCheckFunction) {
+		ApplicationServer.healthCheckFunction = healthCheckFunction;
+		return this;
 	}
 	
 	public void start() throws Exception {
@@ -78,5 +92,9 @@ public class ApplicationServer {
 
 	public ServletContextHandler getContext() {
 		return context;
+	}
+	
+	public static Function<?, Boolean> getAppHealthCheckFunction() {
+		return healthCheckFunction;
 	}
 }
