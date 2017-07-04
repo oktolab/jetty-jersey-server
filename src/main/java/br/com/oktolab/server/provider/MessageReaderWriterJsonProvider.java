@@ -7,6 +7,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.HttpHeaders;
@@ -22,6 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import br.com.oktolab.gson.GSON;
 
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @Provider
 public class MessageReaderWriterJsonProvider implements MessageBodyWriter<Object>, MessageBodyReader<Object> {
 
