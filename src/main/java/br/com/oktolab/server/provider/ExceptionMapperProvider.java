@@ -53,7 +53,7 @@ public class ExceptionMapperProvider implements ExceptionMapper<Throwable> {
 			BusinessException businessException = (BusinessException) exception;
 			return GSON.getGson().toJson(businessException.getValue());
 		}
-		return exception.getMessage();
+		return GSON.getGson().toJson(new ErrorMessage(exception.getMessage()));
 	}
 
 	protected int buildStatusCode(final Throwable realCause) {
@@ -76,6 +76,13 @@ public class ExceptionMapperProvider implements ExceptionMapper<Throwable> {
 			return getRealCause(parentEx);
 		}
 		return ex;
+	}
+	
+	private static class ErrorMessage {
+		@SuppressWarnings("unused") String errorMessage;
+		ErrorMessage (String message) {
+			this.errorMessage = message;
+		}
 	}
 	
 }
