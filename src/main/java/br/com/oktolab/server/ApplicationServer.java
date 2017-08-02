@@ -7,6 +7,7 @@ import java.util.function.Function;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.glassfish.jersey.servlet.ServletContainer;
@@ -37,6 +38,7 @@ public class ApplicationServer {
 //		server.setHandler(servletContext);
 		ResourceConfig config = buildResourceConfig();
 		config.register(RolesAllowedDynamicFeature.class);
+		config.register(JacksonFeature.class);
 		for (Class<?> clazz : features) {
 			config.register(clazz);
 		}
