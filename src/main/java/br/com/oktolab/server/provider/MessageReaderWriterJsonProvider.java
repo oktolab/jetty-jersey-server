@@ -23,7 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import br.com.oktolab.gson.GSON;
 
 @Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
+@Consumes({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
 @Provider
 public class MessageReaderWriterJsonProvider implements MessageBodyWriter<Object>, MessageBodyReader<Object> {
 
